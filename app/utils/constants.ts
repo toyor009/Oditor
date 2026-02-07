@@ -9,7 +9,7 @@ export const NAV_MENU: NavMenu[] = [
   {
     title: "Products",
     id: "products",
-    route: "/",
+    route: "/products",
   },
   {
     title: "Sales",

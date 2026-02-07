@@ -1,9 +1,14 @@
 <template>
-  <NuxtLayout name="guest" page-title="Home">
-    <Sidebar page-id="home" />
-  </NuxtLayout>
+  <MainDashboard />
 </template>
 
 <script setup lang="ts">
-import Sidebar from "~/components/ui/Sidebar.vue";
+import MainDashboard from "~/components/main-dashboard/index.vue";
+
+defineOptions({ name: "MainDashboard" });
+definePageMeta({
+  layout: "app",
+  pageId: "home",
+  pageTitle: "Dashboard",
+});
 </script>
