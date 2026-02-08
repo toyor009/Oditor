@@ -1,7 +1,7 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 
 export default defineNuxtConfig({
-  compatibilityDate: "2026-02-01",
+  compatibilityDate: '2026-02-01',
 
   ssr: false,
 
@@ -12,19 +12,19 @@ export default defineNuxtConfig({
   },
 
   modules: [
-    "@nuxt/ui",
-    "@nuxt/fonts",
-    "@nuxt/icon",
-    "@nuxt/eslint",
-    "@nuxt/image",
-    "@pinia/nuxt",
+    '@nuxt/ui',
+    '@nuxt/fonts',
+    '@nuxt/icon',
+    '@nuxt/eslint',
+    '@nuxt/image',
+    '@pinia/nuxt',
   ],
 
-  css: ["~/assets/css/main.css"],
+  css: ['~/assets/css/main.css'],
 
   app: {
-    pageTransition: { name: "page", mode: "out-in" },
-    layoutTransition: { name: "page", mode: "out-in" },
+    pageTransition: { name: 'page', mode: 'out-in' },
+    layoutTransition: { name: 'page', mode: 'out-in' },
   },
 
   router: {
@@ -36,8 +36,8 @@ export default defineNuxtConfig({
   icon: {
     customCollections: [
       {
-        prefix: "custom",
-        dir: "./app/assets/icons",
+        prefix: 'custom',
+        dir: './app/assets/icons',
       },
     ],
   },
@@ -49,8 +49,8 @@ export default defineNuxtConfig({
 
   runtimeConfig: {
     public: {
-      app_env: process.env.APP_ENV || "development",
-      api_base_url: process.env.API_BASE_URL || "/api",
+      app_env: process.env.APP_ENV || 'development',
+      api_base_url: process.env.API_BASE_URL || '/api',
     },
   },
 });
