@@ -32,6 +32,7 @@ const route = useRoute();
 const pageId = computed(
   () => (route.meta.pageId as AppRouteId | undefined) ?? ("" as AppRouteId),
 );
+
 const pageTitle = computed(
   () => (route.meta.pageTitle as string | undefined) ?? "",
 );
@@ -63,7 +64,7 @@ useHead({
 });
 
 useSeoMeta({
-  title: computed(() => `Oditor  | ${capitalize(pageTitle.value)}`),
+  title: computed(() => `Oditor  | ${capitalize(String(pageTitle.value))}`),
   ogTitle: computed(
     () => `Oditor  | ${seoTitle.value || capitalize(pageTitle.value) || ""}`,
   ),

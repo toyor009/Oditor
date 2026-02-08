@@ -69,6 +69,7 @@
         class="w-full text-soft font-medium"
         :label="isCollapsed ? '' : 'Log out'"
         :title="isCollapsed ? 'Log out' : ''"
+        @click="auth.logout()"
       />
     </div>
   </aside>
@@ -86,9 +87,13 @@ import { NAV_MENU } from "~/utils/constants";
 
 import type { AppRouteId } from "~/types/generic";
 
+import { useAuthStore } from "~/stores/useAuthStore";
+
 const props = defineProps<{
   pageId: AppRouteId;
 }>();
+
+const auth = useAuthStore();
 
 const menuIcons: Record<AppRouteId, any> = {
   home: HomeIcon,

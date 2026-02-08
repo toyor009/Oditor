@@ -10,5 +10,6 @@ definePageMeta({
   layout: "app",
   pageId: "customers",
   pageTitle: "Customers",
+  middleware: ["auth"],
 });
 </script>
