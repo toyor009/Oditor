@@ -68,6 +68,7 @@
         leading-icon="i-custom-log-out"
         class="w-full text-soft font-medium"
         :label="isCollapsed ? '' : 'Log out'"
+        :title="isCollapsed ? 'Log out' : ''"
       />
     </div>
   </aside>
