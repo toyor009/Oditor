@@ -10,5 +10,6 @@ definePageMeta({
   layout: "app",
   pageId: "subscriptions",
   pageTitle: "Subscriptions",
+  middleware: ["auth"],
 });
 </script>

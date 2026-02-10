@@ -1,5 +1,6 @@
 <template>
-  <div>
+  <div class="h-dvh flex flex-col flex-1 p-4">
+    <!-- TODO: Build out the actual guest layout -->
     <slot />
   </div>
 </template>
@@ -12,13 +13,14 @@ import { capitalize } from "~/utils/misc";
 
 const route = useRoute();
 
-const props = defineProps<{
-  pageId?: string;
-  pageTitle: string;
-  seoTitle?: string;
-  seoDescription?: string;
-  seoImage?: string;
-}>();
+const pageTitle = computed(
+  () => (route.meta.pageTitle as string | undefined) ?? "",
+);
+const seoTitle = computed(() => route.meta.seoTitle as string | undefined);
+const seoDescription = computed(
+  () => (route.meta.seoDescription as string | undefined) ?? "",
+);
+const seoImage = computed(() => route.meta.seoImage as string | undefined);
 
 useHead({
   meta: [
@@ -42,11 +44,13 @@ useHead({
 });
 
 useSeoMeta({
-  title: `Oditor  | ${capitalize(props.pageTitle)}`,
-  ogTitle: `Oditor  | ${props.seoTitle || capitalize(props.pageTitle) || ""}`,
-  description: props.seoDescription || "",
-  ogDescription: props.seoDescription || "",
-  ogImage: props?.seoImage || "/images/logo-1.png",
+  title: computed(() => `Oditor  | ${capitalize(String(pageTitle.value))}`),
+  ogTitle: computed(
+    () => `Oditor  | ${seoTitle.value || capitalize(pageTitle.value) || ""}`,
+  ),
+  description: computed(() => seoDescription.value),
+  ogDescription: computed(() => seoDescription.value),
+  ogImage: computed(() => seoImage.value || "/images/logo-1.png"),
   twitterCard: "summary_large_image",
 });
 </script>
