@@ -1,0 +1,212 @@
+@import "tailwindcss";
+@import "@nuxt/ui";
+
+@theme static {
+  /* Colors */
+  --color-background: #f3f2f2;
+  --color-neutral-100: #f3f2f2;
+  --color-primary-50: #b8e1e5;
+  --color-white: #ffffff;
+  --color-background-alt: #f3f2f2;
+  --color-item-lumination: #fbfbfc;
+  --color-neutral-100-alt: #cceaec;
+
+  /* Grey (Faded look) */
+  --color-grey-50: #e6e5e5;
+  --color-grey-100: #b7bec3;
+  --color-grey-200: #97a1a8;
+  --color-grey-300: #77858d;
+  --color-grey-400: #576873;
+  --color-grey-500: #374b58;
+  --color-grey-600: #2e3f4a;
+  --color-grey-700: #25333c;
+  --color-grey-800: #1d272e;
+  --color-grey-900: #141b20;
+
+  /* Primary Color */
+  --color-primary-50: #b8e1e5;
+  --color-primary-100: #a3d8dd;
+  --color-primary-200: #7ac7ce;
+  --color-primary-300: #52b6bf;
+  --color-primary-400: #29a5b0;
+  --color-primary-500: #0094a1;
+  --color-primary-600: #007c87;
+  --color-primary-700: #00656d;
+  --color-primary-800: #004d54;
+  --color-primary-900: #00353a;
+
+  /* Text Color */
+  --color-text-50: #b8bfc3;
+  --color-text-100: #a3acb2;
+  --color-text-200: #7a878f;
+  --color-text-300: #52636d;
+  --color-text-400: #293e4a;
+  --color-text-500: #001928;
+  --color-text-600: #001522;
+  --color-text-700: #00111b;
+  --color-text-800: #000d15;
+  --color-text-900: #00090e;
+  --color-soft: #a3a3a3;
+
+  /* Success Color */
+  --color-success-50: #d8edcb;
+  --color-success-100: #cce8bc;
+  --color-success-200: #b6de9e;
+  --color-success-300: #9fd381;
+  --color-success-400: #89c963;
+  --color-success-500: #72bf45;
+  --color-success-600: #60a03a;
+  --color-success-700: #4e822f;
+  --color-success-800: #3b6324;
+  --color-success-900: #294519;
+
+  /* Warning Color */
+  --color-warning-50: #fee6bd;
+  --color-warning-100: #fedfaa;
+  --color-warning-200: #fed184;
+  --color-warning-300: #fec35f;
+  --color-warning-400: #fdb539;
+  --color-warning-500: #fda713;
+  --color-warning-600: #d58c10;
+  --color-warning-700: #ac720d;
+  --color-warning-800: #84570a;
+  --color-warning-900: #5b3c07;
+
+  /* Error Color */
+  --color-error-50: #febdbd;
+  --color-error-100: #feaaaa;
+  --color-error-200: #fe8484;
+  --color-error-300: #fe5f5f;
+  --color-error-400: #fd3939;
+  --color-error-500: #fd1313;
+  --color-error-600: #d51010;
+  --color-error-700: #ac0d0d;
+  --color-error-800: #840a0a;
+  --color-error-900: #5b0707;
+}
+
+:root {
+  /* Primary color */
+  --ui-color-primary: var(--color-primary-500);
+  --ui-color-primary-500: var(--color-primary-500);
+}
+
+/* Elements */
+
+span.iconify {
+  &.size-1 {
+    width: calc(var(--spacing) * 1);
+    height: calc(var(--spacing) * 1);
+  }
+  &.size-2 {
+    width: calc(var(--spacing) * 2);
+    height: calc(var(--spacing) * 2);
+  }
+  &.size-3 {
+    width: calc(var(--spacing) * 3);
+    height: calc(var(--spacing) * 3);
+  }
+  &.size-4 {
+    width: calc(var(--spacing) * 4);
+    height: calc(var(--spacing) * 4);
+  }
+  &.size-5 {
+    width: calc(var(--spacing) * 5);
+    height: calc(var(--spacing) * 5);
+  }
+  &.size-6 {
+    width: calc(var(--spacing) * 6);
+    height: calc(var(--spacing) * 6);
+  }
+  &.size-7 {
+    width: calc(var(--spacing) * 7);
+    height: calc(var(--spacing) * 7);
+  }
+  &.size-8 {
+    width: calc(var(--spacing) * 8);
+    height: calc(var(--spacing) * 8);
+  }
+
+  &.size-10 {
+    width: calc(var(--spacing) * 10);
+    height: calc(var(--spacing) * 10);
+  }
+
+  &.size-12 {
+    width: calc(var(--spacing) * 12);
+    height: calc(var(--spacing) * 12);
+  }
+
+  &.size-14 {
+    width: calc(var(--spacing) * 14);
+    height: calc(var(--spacing) * 14);
+  }
+
+  &.size-16 {
+    width: calc(var(--spacing) * 16);
+    height: calc(var(--spacing) * 16);
+  }
+}
+
+/* Transitions */
+
+/* Fade Transition */
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.6s ease-out;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+
+.fade-enter-to,
+.fade-leave-from {
+  opacity: 1;
+}
+
+/* Slide Up Transition */
+.slide-up-enter-active,
+.slide-up-leave-active {
+  transition:
+    opacity 0.6s ease-out,
+    transform 0.6s ease-out;
+}
+
+.slide-up-enter-from {
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.slide-up-enter-to,
+.slide-up-leave-from {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.slide-up-leave-to {
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+/* Slide Down Transition */
+.slide-down-enter-active,
+.slide-down-leave-active {
+  transition: all 500ms cubic-bezier(0.4, 0, 0.2, 1);
+  overflow: hidden;
+}
+
+.slide-down-enter-from,
+.slide-down-leave-to {
+  max-height: 0;
+  opacity: 0;
+}
+
+.slide-down-enter-to,
+.slide-down-leave-from {
+  max-height: 500px;
+  opacity: 1;
+}
+
+/* Utilities */
