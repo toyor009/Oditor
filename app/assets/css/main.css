@@ -46,6 +46,7 @@
   --color-text-700: #00111b;
   --color-text-800: #000d15;
   --color-text-900: #00090e;
+  --color-soft: #a3a3a3;
 
   /* Success Color */
   --color-success-50: #d8edcb;
@@ -86,6 +87,7 @@
 
 :root {
   /* Primary color */
+  --ui-color-primary: var(--color-primary-500);
   --ui-color-primary-500: var(--color-primary-500);
 }
 
