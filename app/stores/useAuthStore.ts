@@ -17,6 +17,10 @@ export const useAuthStore = defineStore('auth', () => {
 
   const isLoggedIn = computed(() => !!loggedInUser.value);
 
+  const userHasABusiness = computed(
+    () => (loggedInUser.value?.profileInfo?.businessProfiles || [])?.length > 0,
+  );
+
   async function login(credentials: LoginCredentials) {
     const { data, error } = await useApiService<LoggedInUser>(
       '/web/authenticate-user',
@@ -59,6 +63,8 @@ export const useAuthStore = defineStore('auth', () => {
 
   return {
     isLoggedIn,
+    loggedInUser,
+    userHasABusiness,
     login,
     logout,
     fetchUser,

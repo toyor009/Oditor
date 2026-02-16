@@ -10,6 +10,6 @@ defineOptions({ name: 'AccountReactivationPage' });
 definePageMeta({
   layout: 'guest',
   pageTitle: 'Reactivate Account',
-  // middleware: ['guest'],
+  middleware: ['account-reactivation'],
 });
 </script>

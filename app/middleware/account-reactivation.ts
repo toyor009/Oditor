@@ -1,11 +1,9 @@
 import { useAuthStore } from '~/stores/useAuthStore';
 
 export default defineNuxtRouteMiddleware((to, from) => {
-  if (from.meta.layout !== 'app') return to.path === '/';
-
   const auth = useAuthStore();
 
-  if (!auth.isLoggedIn || !auth.userHasABusiness) {
+  if (!auth.isLoggedIn || auth.loggedInUser?.accountStatus !== 'Deactivated') {
     return navigateTo('/auth/login', { replace: true });
   }
 });
