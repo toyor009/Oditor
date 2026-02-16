@@ -49,8 +49,10 @@ export default defineNuxtConfig({
 
   runtimeConfig: {
     public: {
-      app_env: process.env.APP_ENV || 'development',
-      api_base_url: process.env.API_BASE_URL || '/api',
+      app_name: import.meta.env.NUXT_APP_NAME,
+      app_full_name: import.meta.env.NUXT_APP_FULL_NAME,
+      app_env: import.meta.env.NUXT_APP_ENV || 'development',
+      api_base_url: import.meta.env.NUXT_API_BASE_URL,
     },
   },
 });
