@@ -13,9 +13,12 @@
       <span class="text-soft text-[10px] text-nowrap"> NO ACCOUNT? </span>
       <hr class="w-full border-soft" />
     </div>
+
+    <AppStoreLinks />
   </div>
 </template>
 
 <script setup lang="ts">
 import LoginForm from '~/components/login/LoginForm.vue';
+import AppStoreLinks from '~/components/ui/AppStoreLinks.vue';
 </script>

@@ -29,7 +29,6 @@
   --color-grey-700: #333333;
   --color-grey-800: #292929;
   --color-grey-900: #1c1c1c;
-  --color-grey-950: #171717;
 
   /* Primary / Brand Color  */
   --color-primary-50: #c9fbff;
@@ -44,17 +43,8 @@
   --color-primary-900: #001e20;
 
   /* Text */
-  --color-text-50: #a3a3a3;
-  --color-text-100: #a3a3a3;
-  --color-text-200: #7b7b7b;
-  --color-text-300: #5c5c5c;
-  --color-text-400: #333333;
-  --color-text-500: #171717;
-  --color-text-600: #171717;
-  --color-text-700: #171717;
-  --color-text-800: #171717;
-  --color-text-900: #171717;
   --color-soft: #a3a3a3;
+  --color-strong: #171717;
 
   /* Success */
   --color-success-50: #ebfef3;
