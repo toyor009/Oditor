@@ -2,6 +2,10 @@
 @import '@nuxt/ui';
 
 @theme static {
+  /* Fonts*/
+  --font-gilmer: 'Gilmer', sans-serif;
+  --font-outfit: 'Outfit', sans-serif;
+
   /* Base*/
   --color-white: #ffffff;
   --color-black: #000000;
@@ -164,6 +168,21 @@ span.iconify {
     width: calc(var(--spacing) * 16);
     height: calc(var(--spacing) * 16);
   }
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-size: revert;
+  font-weight: revert;
+  font-family: var(--font-gilmer);
+}
+
+html {
+  font-family: var(--font-outfit);
 }
 
 /* Transitions */
