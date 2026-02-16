@@ -3,7 +3,7 @@ import { defineStore } from 'pinia';
 import { useApiService } from '~/composables/useApiService';
 import { useAuthToken } from '~/composables/useAuthToken';
 
-import type { LoggedInUser } from '~/types/auth';
+import type { LoggedInUser, UserProfile } from '~/types/auth';
 
 interface LoginCredentials {
   email: string;
@@ -32,8 +32,15 @@ export const useAuthStore = defineStore('auth', () => {
 
     if (data.value) {
       setAccessToken(data.value?.accessToken);
-      localStorage.setItem('user', JSON.stringify(data.value));
       loggedInUser.value = data.value;
+
+      if (!data.value?.profileInfo)
+        loggedInUser.value.profileInfo = {
+          ...loggedInUser.value.profileInfo,
+          email: credentials.email,
+        } as UserProfile;
+
+      localStorage.setItem('user', JSON.stringify(loggedInUser.value));
     }
 
     return { data, error };
@@ -44,9 +51,9 @@ export const useAuthStore = defineStore('auth', () => {
 
     //Temporal fix
     loggedInUser.value = null;
-    localStorage.removeItem('user');
     removeAccessToken();
     navigateTo('/auth/login', { replace: true });
+    localStorage.clear();
   }
 
   async function fetchUser() {
@@ -61,6 +68,44 @@ export const useAuthStore = defineStore('auth', () => {
     loggedInUser.value = userInfo;
   }
 
+  async function sendOtp() {
+    const { data, error } = await useApiService<{
+      otpKey: string;
+      email: string;
+    }>('/web/request-user-account-activation-otp', {
+      method: 'POST',
+    });
+
+    if (data.value) {
+      localStorage.setItem('otpKey', data.value.otpKey);
+    }
+
+    return { data, error };
+  }
+
+  async function reactivateAccount(otpDetails: {
+    accountActivationKey: string;
+    accountActivationOtp: string;
+  }) {
+    const { accountActivationOtp, accountActivationKey } = otpDetails;
+    const { data, error } = await useApiService<LoggedInUser>(
+      '/web/activate-user-account',
+      {
+        method: 'PUT',
+        body: { accountActivationOtp, accountActivationKey },
+      },
+    );
+
+    if (data.value) {
+      setAccessToken(data.value?.accessToken);
+      loggedInUser.value = data.value;
+      localStorage.setItem('user', JSON.stringify(data.value));
+      localStorage.removeItem('otpKey');
+    }
+
+    return { data, error };
+  }
+
   return {
     isLoggedIn,
     loggedInUser,
@@ -68,5 +113,7 @@ export const useAuthStore = defineStore('auth', () => {
     login,
     logout,
     fetchUser,
+    sendOtp,
+    reactivateAccount,
   };
 });

@@ -6,10 +6,19 @@
       your account?
     </p>
 
-    <UButton label="Reactivate" block @click="emit('send-otp')" />
+    <UButton
+      label="Reactivate"
+      :loading="isLoading"
+      block
+      @click="emit('send-otp')"
+    />
   </div>
 </template>
 
 <script setup lang="ts">
 const emit = defineEmits(['send-otp']);
+
+defineProps<{
+  isLoading?: boolean;
+}>();
 </script>

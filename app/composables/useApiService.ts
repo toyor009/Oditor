@@ -33,8 +33,9 @@ export function useApiService<T>(
   const { headers: _, ...restOptions } = options;
 
   return useFetch(url, {
-    watch: false,
     ...restOptions,
+    watch: false,
     headers,
+    key: `${path}-${Date.now()}-${Math.random()}`,
   });
 }

@@ -9,7 +9,7 @@
         :length="4"
         :autofocus="true"
         :otp="true"
-        :disabled="isLoading"
+        :disabled="isSubmitting"
         :ui="{
           base: 'w-full md:w-17 h-12 bg-neutral-100 text-2xl ring-grey-300 rounded-xl',
           root: 'justify-between',
@@ -41,8 +41,8 @@
     <UButton
       label="Verify"
       class="mt-12"
-      :loading="isLoading"
-      :disabled="isLoading || !formIsValid"
+      :loading="isSubmitting"
+      :disabled="isSubmitting || !formIsValid"
       block
       @click="emit('submit', otp.join(''))"
     />
@@ -56,7 +56,7 @@ defineOptions({ name: 'OTPInput' });
 
 const props = withDefaults(
   defineProps<{
-    isLoading?: boolean;
+    isSubmitting?: boolean;
     duration?: number;
   }>(),
   {
