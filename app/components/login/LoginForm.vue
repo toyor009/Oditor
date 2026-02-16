@@ -2,8 +2,8 @@
   <UForm
     class="w-full space-y-5 text-sm text-soft"
     :schema="schema"
-    :state="{ ...formState }"
-    :disabled="false"
+    :state="{ ...loginDetails }"
+    :disabled="isLoading"
     @submit.prevent="submitForm"
   >
     <!-- Email -->
@@ -13,7 +13,7 @@
       :ui="{ label: ' text-black mb-2.5' }"
     >
       <UInput
-        v-model="formState.email"
+        v-model="loginDetails.email"
         class="w-full"
         variant="subtle"
         size="xl"
@@ -28,14 +28,14 @@
       :ui="{ label: 'text-black mb-2.5' }"
     >
       <UInput
-        v-model="formState.password"
+        v-model="loginDetails.password"
         class="w-full"
         variant="subtle"
         size="xl"
         placeholder="Min. 4 character"
         :type="showPassword ? 'text' : 'password'"
       >
-        <template v-if="formState.password.length" #trailing>
+        <template v-if="loginDetails.password.length" #trailing>
           <UButton
             variant="ghost"
             size="sm"
@@ -56,7 +56,13 @@
       </UButton>
     </UFormField>
 
-    <UButton label="Sign in" class="mt-10" type="submit" block />
+    <UButton
+      label="Sign in"
+      class="mt-10"
+      type="submit"
+      :loading="isLoading"
+      block
+    />
   </UForm>
 </template>
 
@@ -64,6 +70,7 @@
 import * as v from 'valibot';
 
 import type { FormSubmitEvent } from '@nuxt/ui';
+import type { LoggedInUser } from '~/types/auth';
 
 import { useAuthStore } from '~/stores/useAuthStore';
 
@@ -72,12 +79,18 @@ defineOptions({ name: 'LoginForm' });
 type Schema = v.InferOutput<ReturnType<typeof createSchema>>;
 
 const auth = useAuthStore();
+const toast = useToast();
 
 const schema = ref(createSchema());
 const showPassword = ref(false);
-const formState = reactive({
+const isLoading = ref(false);
+const loginDetails = reactive({
   email: '',
   password: '',
+});
+
+const formIsValid = computed(() => {
+  return v.safeParse(schema.value, loginDetails).success;
 });
 
 function createSchema() {
@@ -97,13 +110,52 @@ function createSchema() {
 
 async function submitForm(event: FormSubmitEvent<Schema>) {
   if (event.type !== 'submit') return;
+  if (!formIsValid.value) return;
 
-  console.log('submit form', formState);
+  login();
 }
 
 async function login() {
-  const { data } = await auth.login({ email: 'test@mail.com', password: '' });
+  try {
+    isLoading.value = true;
+    const { data, error } = await auth.login(loginDetails);
 
-  if (data.success) navigateTo('/', { replace: true });
+    if (error.value) {
+      toast.add({
+        title: 'Log in failed',
+        description: error.value?.data?.message || 'Log in failed',
+        color: 'error',
+      });
+      return;
+    }
+
+    if (!data.value) return;
+
+    toast.add({
+      title: 'Success',
+      description: 'Log in successful',
+      color: 'success',
+    });
+
+    handleRedirection(data.value);
+  } catch (error) {
+    console.log('Error logging in', error);
+  } finally {
+    isLoading.value = false;
+  }
+}
+
+function handleRedirection(userInfo: LoggedInUser) {
+  const { accountStatus, profileInfo = {} as LoggedInUser['profileInfo'] } =
+    userInfo;
+  if (accountStatus === 'Deactivated') {
+    navigateTo('/auth/reactivate-account', { replace: true });
+    return;
+  }
+
+  if (profileInfo?.businessProfiles?.length === 1) {
+    navigateTo('/', { replace: true });
+    return;
+  }
 }
 </script>
