@@ -2,6 +2,8 @@
   <div class="h-dvh overflow-auto">
     <div class="h-full min-w-5xl overflow-x-scroll grid grid-cols-2">
       <div class="w-100 mt-25 mx-auto">
+        <NuxtImg src="/images/logo-1.png" class="w-22 mb-10" />
+
         <slot />
       </div>
 
