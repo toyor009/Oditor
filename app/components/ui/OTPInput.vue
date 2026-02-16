@@ -29,7 +29,7 @@
         @click="resendOtp"
       >
         <span v-if="isCountingDown" class="text-soft font-medium">
-          Resend in {{ remainingTime }}s
+          Resend in {{ moment.utc(remainingTime * 1000).format('mm:ss') }}
         </span>
         <span v-else class="text-soft font-medium underline">
           Click here to resend
@@ -50,7 +50,7 @@
 </template>
 
 <script setup lang="ts">
-// import moment from 'moment';
+import moment from 'moment';
 
 defineOptions({ name: 'OTPInput' });
 
