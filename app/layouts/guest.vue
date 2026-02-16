@@ -1,14 +1,20 @@
 <template>
   <div class="h-dvh overflow-auto">
     <div class="h-full min-w-5xl overflow-x-scroll grid grid-cols-2">
-      <div class="w-100 mt-25 mx-auto">
-        <NuxtImg src="/images/logo-1.png" class="w-22 mb-10" />
+      <div class="w-100 mt-25 mx-auto flex flex-col justify-between">
+        <div>
+          <NuxtImg src="/images/logo-1.png" class="w-22 mb-10" />
 
-        <slot />
+          <slot />
+        </div>
+
+        <p class="text-soft text-sm text-center">
+          {{ `© ${new Date().getFullYear()}` }} Lintint Technology Limited
+        </p>
       </div>
 
       <div
-        class="bg-grey-25 p-4 border-l border-[#f2f2f2] flex items-center xl:items-end"
+        class="bg-grey-25 p-4 border-l border-neutral-200 flex items-center xl:items-end"
       >
         <NuxtImg src="/images/image-1.png" class="w-full xl:w-166 mx-auto" />
       </div>
