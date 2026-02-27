@@ -1,11 +1,15 @@
 import { useAuthStore } from '~/stores/useAuthStore';
 
 export default defineNuxtRouteMiddleware((to, from) => {
-  if (from.meta.layout !== 'app') return to.path === '/';
-
   const auth = useAuthStore();
 
-  if (!auth.isLoggedIn || !auth.loggedInUser?.selectedBusinessKey) {
+  const businessSelected = () => !!auth.loggedInUser?.selectedBusinessKey;
+  const allowInterLayoutRedirect = () =>
+    auth.isLoggedIn && businessSelected() && to.path === '/';
+
+  if (from?.meta?.layout !== 'app') return allowInterLayoutRedirect();
+
+  if (!auth.isLoggedIn || !businessSelected()) {
     return navigateTo('/auth/login', { replace: true });
   }
 });

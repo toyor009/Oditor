@@ -47,7 +47,7 @@ async function loginToBusiness(businessKey: string) {
       return;
     }
 
-    navigateTo('/');
+    return navigateTo('/', { replace: true });
   } catch (error) {
     console.log('Error loggig in to business', error);
   } finally {
