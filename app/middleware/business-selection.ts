@@ -8,4 +8,8 @@ export default defineNuxtRouteMiddleware((to, from) => {
   if (!auth.isLoggedIn || businessStore.userBusinesses.length < 2) {
     return navigateTo('/auth/login', { replace: true });
   }
+
+  if (auth.loggedInUser?.selectedBusinessKey) {
+    return navigateTo('/', { replace: true });
+  }
 });
