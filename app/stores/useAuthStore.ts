@@ -51,10 +51,9 @@ export const useAuthStore = defineStore('auth', () => {
     // TODO: Make API request to logout
 
     //Temporal fix
-    loggedInUser.value = null;
-    removeAccessToken();
-    navigateTo('/auth/login', { replace: true });
     localStorage.clear();
+    loggedInUser.value = null;
+    navigateTo('/auth/login', { replace: true });
   }
 
   async function fetchUser() {
