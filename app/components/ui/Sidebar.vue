@@ -1,6 +1,6 @@
 <template>
   <aside
-    class="bg-white border-r border-[#ededed] flex flex-col items-center text-sm transition-all"
+    class="sidebar bg-white border-r border-[#ededed] px-5 flex flex-col text-sm"
     :class="isCollapsed ? 'w-20' : 'w-68'"
   >
     <div
@@ -37,11 +37,11 @@
         </div>
 
         <!-- Menu Items -->
-        <ul class="sidebar-menu space-y-4">
+        <ul class="sidebar__menu space-y-4">
           <li v-for="menu in NAV_MENU">
             <UButton
               variant="ghost"
-              class="h-10 w-full flex gap-2 text-soft font-medium first"
+              class="h-10 w-full flex gap-2 text-soft font-medium first transition-all"
               :to="menu.route"
               :title="isCollapsed ? menu.title : ''"
             >
@@ -76,18 +76,19 @@
 </template>
 
 <script setup lang="ts">
-import HomeIcon from "~/components/icons/Home.vue";
-import BagIcon from "~/components/icons/Bag.vue";
-import ReceiptIcon from "~/components/icons/Receipt.vue";
-import UsersIcon from "~/components/icons/Users.vue";
-import WalletIcon from "~/components/icons/Wallet.vue";
-import CogIcon from "~/components/icons/Cog.vue";
+import HomeIcon from '~/components/icons/Home.vue';
+import BagIcon from '~/components/icons/Bag.vue';
+import ReceiptIcon from '~/components/icons/Receipt.vue';
+import UsersIcon from '~/components/icons/Users.vue';
+import WalletIcon from '~/components/icons/Wallet.vue';
+import CogIcon from '~/components/icons/Cog.vue';
 
-import { NAV_MENU } from "~/utils/constants";
+import { NAV_MENU } from '~/utils/constants';
 
-import type { AppRouteId } from "~/types/generic";
+import type { AppRouteId } from '~/types/generic';
 
-import { useAuthStore } from "~/stores/useAuthStore";
+import { useMediaQuery } from '@vueuse/core';
+import { useAuthStore } from '~/stores/useAuthStore';
 
 const props = defineProps<{
   pageId: AppRouteId;
@@ -105,6 +106,7 @@ const menuIcons: Record<AppRouteId, any> = {
 };
 
 const isCollapsed = ref(false);
+const isMobileOrLaptopScreen = useMediaQuery('(max-width: 1024px )');
 
 function toggleSidebar() {
   isCollapsed.value = !isCollapsed.value;
@@ -113,20 +115,33 @@ function toggleSidebar() {
 function isActiveMenu(menuId: string) {
   return props.pageId === menuId;
 }
+
+watch(
+  isMobileOrLaptopScreen,
+  () => {
+    if (!isMobileOrLaptopScreen.value) return;
+    isCollapsed.value = true;
+  },
+  { immediate: true },
+);
 </script>
 
 <style scoped>
-.sidebar-menu {
-  li:first-of-type {
-    padding-bottom: 1rem;
-    margin-bottom: 1rem;
-    border-bottom: 1px solid #e6e6e6;
-  }
+.sidebar {
+  transition: all 0.2s ease-in-out;
 
-  li:last-of-type {
-    padding-top: 1rem;
-    margin-top: 1rem;
-    border-top: 1px solid #e6e6e6;
+  .sidebar__menu {
+    li:first-of-type {
+      padding-bottom: 1rem;
+      margin-bottom: 1rem;
+      border-bottom: 1px solid #e6e6e6;
+    }
+
+    li:last-of-type {
+      padding-top: 1rem;
+      margin-top: 1rem;
+      border-top: 1px solid #e6e6e6;
+    }
   }
 }
 </style>
