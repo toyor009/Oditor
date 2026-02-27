@@ -41,7 +41,7 @@ export const useBusinessStore = defineStore('business', () => {
 
   async function swtichBusiness(businessKey: string) {
     const { data, error } = await useApiService<LoggedInUser>(
-      `/web/switch-business/${businessKey}`,
+      `/web-user-service/switch-business/${businessKey}`,
       {
         method: 'GET',
       },

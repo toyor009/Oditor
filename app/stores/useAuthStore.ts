@@ -19,7 +19,7 @@ export const useAuthStore = defineStore('auth', () => {
 
   async function login(credentials: LoginCredentials) {
     const { data, error } = await useApiService<LoggedInUser>(
-      '/web/authenticate-user',
+      '/web-user-service/authenticate-user',
       {
         method: 'POST',
         body: credentials,
@@ -72,7 +72,7 @@ export const useAuthStore = defineStore('auth', () => {
     const { data, error } = await useApiService<{
       otpKey: string;
       email: string;
-    }>('/web/request-user-account-activation-otp', {
+    }>('/web-user-service/request-user-account-activation-otp', {
       method: 'POST',
     });
 
@@ -89,7 +89,7 @@ export const useAuthStore = defineStore('auth', () => {
   }) {
     const { accountActivationOtp, accountActivationKey } = otpDetails;
     const { data, error } = await useApiService<LoggedInUser>(
-      '/web/activate-user-account',
+      '/web-user-service/activate-user-account',
       {
         method: 'PUT',
         body: { accountActivationOtp, accountActivationKey },
