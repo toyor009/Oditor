@@ -72,7 +72,7 @@ import * as v from 'valibot';
 import type { FormSubmitEvent } from '@nuxt/ui';
 
 import { useAuthStore } from '~/stores/useAuthStore';
-import { useAuthUserRedirection } from '~/composables/useAuthUserRedirection';
+import { authUserRedirection } from '~/composables/authUserRedirection';
 
 defineOptions({ name: 'LoginForm' });
 
@@ -80,7 +80,7 @@ type Schema = v.InferOutput<ReturnType<typeof createSchema>>;
 
 const authStore = useAuthStore();
 const toast = useToast();
-const { handleRedirection } = useAuthUserRedirection();
+const { handleRedirection } = authUserRedirection();
 
 const schema = ref(createSchema());
 const showPassword = ref(false);

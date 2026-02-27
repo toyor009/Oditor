@@ -1,7 +1,7 @@
 import { useAuthStore } from '~/stores/useAuthStore';
 import { useBusinessStore } from '~/stores/useBusinessStore';
 
-export function useAuthUserRedirection() {
+export function authUserRedirection() {
   const authStore = useAuthStore();
   const businessStore = useBusinessStore();
 

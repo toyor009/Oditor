@@ -23,12 +23,12 @@ import OTPForm from '~/components/account-reactivation/OTPForm.vue';
 import LogoutButton from '~/components/ui/LogoutButton.vue';
 
 import { useAuthStore } from '~/stores/useAuthStore';
-import { useAuthUserRedirection } from '~/composables/useAuthUserRedirection';
+import { authUserRedirection } from '~/composables/authUserRedirection';
 
 const auth = useAuthStore();
 const toast = useToast();
 
-const { handleRedirection } = useAuthUserRedirection();
+const { handleRedirection } = authUserRedirection();
 
 const otpSent = ref(false);
 const isLoading = ref(false);
