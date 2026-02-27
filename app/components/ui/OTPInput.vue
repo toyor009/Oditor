@@ -10,11 +10,18 @@
         :autofocus="true"
         :otp="true"
         :disabled="isSubmitting"
+        :color="error ? 'error' : 'primary'"
         :ui="{
-          base: 'w-full md:w-17 h-12 bg-neutral-100 text-2xl ring-grey-300 rounded-xl',
+          base: `w-full md:w-17 h-12 text-2xl rounded-xl ${error ? 'bg-error-50 ring-error text-error' : 'ring-grey-300 bg-neutral-100'}`,
           root: 'justify-between',
         }"
       />
+
+      <ErrorBlock :description="error" class="mt-2" theme="plain">
+        <template #icon>
+          <CautionIcon />
+        </template>
+      </ErrorBlock>
     </div>
 
     <!-- Resend OTP -->
@@ -52,12 +59,16 @@
 <script setup lang="ts">
 import moment from 'moment';
 
+import ErrorBlock from '~/components/ui/ErrorBlock.vue';
+import CautionIcon from '~/components/icons/CautionTriangle.vue';
+
 defineOptions({ name: 'OTPInput' });
 
 const props = withDefaults(
   defineProps<{
     isSubmitting?: boolean;
     duration?: number;
+    error?: string;
   }>(),
   {
     duration: 60,

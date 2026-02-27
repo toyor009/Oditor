@@ -1,12 +1,20 @@
 <template>
-  <UApp :toaster="{ position: 'top-right' }">
+  <UApp :toaster="toaster">
     <NuxtLayout>
       <NuxtPage />
     </NuxtLayout>
   </UApp>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import type { ToasterProps } from '@nuxt/ui';
+
+const toaster: ToasterProps = {
+  position: 'top-right',
+  max: 1,
+  // duration: 0,
+};
+</script>
 
 <style>
 .page-enter-active,

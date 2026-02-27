@@ -8,6 +8,7 @@
     <OTPInput
       :duration="180"
       :is-submitting="isSubmitting"
+      :error="error"
       @resend-otp="emit('resend-otp', $event)"
       @submit="emit('verify-otp', $event)"
     />
@@ -20,6 +21,7 @@ import OTPInput from '~/components/ui/OTPInput.vue';
 const props = defineProps<{
   userEmail: string;
   isSubmitting?: boolean;
+  error?: string;
 }>();
 
 const emit = defineEmits<{

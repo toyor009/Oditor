@@ -5,11 +5,17 @@
         v-if="otpSent"
         :user-email="auth.loggedInUser?.profileInfo?.email || ''"
         :is-submitting="isLoading"
+        :error="activationError"
         @resend-otp="resendOtp"
         @verify-otp="reactivateAccount"
       />
 
-      <ReactivationForm v-else :is-loading="isLoading" @send-otp="sendOtp" />
+      <ReactivationForm
+        v-else
+        :is-loading="isLoading"
+        :error="otpError"
+        @send-otp="sendOtp"
+      />
     </Transition>
 
     <!-- Log out -->
@@ -32,18 +38,23 @@ const { handleRedirection } = authUserRedirection();
 
 const otpSent = ref(false);
 const isLoading = ref(false);
+const otpError = ref({
+  title: '',
+  description: '',
+});
+const activationError = ref('');
 
 async function sendOtp() {
   try {
     isLoading.value = true;
+    clearOtpError();
+
     const { data, error } = await auth.sendOtp();
 
     if (error.value) {
-      toast.add({
-        title: 'Error',
-        description: error.value?.data?.message || 'Unable to send OTP',
-        color: 'error',
-      });
+      setOtpError(
+        error.value?.data?.message || 'Unable to send reactivation OTP',
+      );
       return;
     }
 
@@ -71,6 +82,7 @@ async function resendOtp(startTimer: () => void) {
 async function reactivateAccount(accountActivationOtp: string) {
   try {
     isLoading.value = true;
+    clearActivationError();
 
     const accountActivationKey = localStorage.getItem('otpKey') || '';
     const { data, error } = await auth.reactivateAccount({
@@ -78,13 +90,10 @@ async function reactivateAccount(accountActivationOtp: string) {
       accountActivationOtp,
     });
 
-    if (error.value) {
-      toast.add({
-        title: 'Error',
-        description:
-          error.value?.data?.message || 'Account reactivation failed',
-        color: 'error',
-      });
+    if (error.value && error.value?.data?.errorCode === 435) {
+      setActivationError(
+        error.value?.data?.message || 'Account reactivation failed',
+      );
       return;
     }
 
@@ -102,5 +111,27 @@ async function reactivateAccount(accountActivationOtp: string) {
   } finally {
     isLoading.value = false;
   }
+}
+
+function setOtpError(description: string) {
+  otpError.value = {
+    title: 'Error',
+    description,
+  };
+}
+
+function clearOtpError() {
+  otpError.value = {
+    title: '',
+    description: '',
+  };
+}
+
+function setActivationError(error: string) {
+  activationError.value = error;
+}
+
+function clearActivationError() {
+  activationError.value = '';
 }
 </script>

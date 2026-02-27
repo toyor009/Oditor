@@ -6,6 +6,8 @@
       your account?
     </p>
 
+    <ErrorBlock v-bind="error" class="mt-2 mb-6" theme="error" />
+
     <UButton
       label="Reactivate"
       :loading="isLoading"
@@ -16,9 +18,15 @@
 </template>
 
 <script setup lang="ts">
-const emit = defineEmits(['send-otp']);
+import ErrorBlock from '~/components/ui/ErrorBlock.vue';
 
 defineProps<{
   isLoading?: boolean;
+  error: {
+    title: string;
+    description: string;
+  };
 }>();
+
+const emit = defineEmits(['send-otp']);
 </script>

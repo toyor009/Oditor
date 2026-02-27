@@ -51,11 +51,15 @@
       </UInput>
 
       <!-- Forgot Password Link -->
-      <UButton variant="link" class="mt-2.5 text-xs text-primary float-end">
+      <UButton variant="link" class="mt-1.5 text-xs text-primary float-end">
         Forgot Password?
       </UButton>
     </UFormField>
 
+    <!-- Error Message-->
+    <ErrorBlock v-bind="loginError" class="mt-10" theme="error" />
+
+    <!-- Submit Button -->
     <UButton
       label="Sign in"
       class="mt-10"
@@ -68,6 +72,8 @@
 
 <script setup lang="ts">
 import * as v from 'valibot';
+
+import ErrorBlock from '~/components/ui/ErrorBlock.vue';
 
 import type { FormSubmitEvent } from '@nuxt/ui';
 
@@ -88,6 +94,11 @@ const isLoading = ref(false);
 const loginDetails = reactive({
   email: '',
   password: '',
+});
+
+const loginError = ref({
+  title: '',
+  description: '',
 });
 
 const formIsValid = computed(() => {
@@ -119,14 +130,12 @@ async function submitForm(event: FormSubmitEvent<Schema>) {
 async function login() {
   try {
     isLoading.value = true;
+    clearError();
+
     const { data, error } = await authStore.login(loginDetails);
 
     if (error.value) {
-      toast.add({
-        title: 'Log in failed',
-        description: error.value?.data?.message || 'Log in failed',
-        color: 'error',
-      });
+      setError(error.value?.data?.message || 'Log in failed');
       return;
     }
 
@@ -144,5 +153,19 @@ async function login() {
   } finally {
     isLoading.value = false;
   }
+}
+
+function setError(description: string) {
+  loginError.value = {
+    title: 'Unable to sign in',
+    description,
+  };
+}
+
+function clearError() {
+  loginError.value = {
+    title: '',
+    description: '',
+  };
 }
 </script>
