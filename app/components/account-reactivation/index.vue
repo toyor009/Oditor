@@ -12,26 +12,15 @@
       <ReactivationForm v-else :is-loading="isLoading" @send-otp="sendOtp" />
     </Transition>
 
-    <div class="mt-3">
-      <UButton
-        label="Logout"
-        variant="ghost"
-        color="error"
-        block
-        @click="auth.logout()"
-      >
-        <template #leading>
-          <LogoutIcon active-color="#FE393B" active />
-        </template>
-      </UButton>
-    </div>
+    <!-- Log out -->
+    <LogoutButton class="mt-3" />
   </div>
 </template>
 
 <script setup lang="ts">
 import ReactivationForm from '~/components/account-reactivation/ReactivationForm.vue';
 import OTPForm from '~/components/account-reactivation/OTPForm.vue';
-import LogoutIcon from '~/components/icons/Logout.vue';
+import LogoutButton from '~/components/ui/LogoutButton.vue';
 
 import { useAuthStore } from '~/stores/useAuthStore';
 

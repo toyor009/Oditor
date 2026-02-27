@@ -17,9 +17,24 @@ export const useAuthStore = defineStore('auth', () => {
 
   const isLoggedIn = computed(() => !!loggedInUser.value);
 
-  const userHasABusiness = computed(
-    () => (loggedInUser.value?.profileInfo?.businessProfiles || [])?.length > 0,
-  );
+  const userHasABusiness = computed(() => userBusinesses.value.length > 0);
+
+  // const userBusinesses = computed(
+  //   () => loggedInUser?.value?.profileInfo?.businessProfiles || [],
+  // );
+
+  const userBusinesses = computed(() => {
+    const businesses = [
+      ...(loggedInUser?.value?.profileInfo?.businessProfiles || []),
+      ...(loggedInUser?.value?.profileInfo?.businessProfiles || []),
+      ...(loggedInUser?.value?.profileInfo?.businessProfiles || []),
+    ];
+
+    return businesses.map((b, index) => ({
+      ...b,
+      businessKey: index === 1 ? b.businessKey : `${index}-${b.businessKey}`,
+    }));
+  });
 
   async function login(credentials: LoginCredentials) {
     const { data, error } = await useApiService<LoggedInUser>(
@@ -110,6 +125,7 @@ export const useAuthStore = defineStore('auth', () => {
     isLoggedIn,
     loggedInUser,
     userHasABusiness,
+    userBusinesses,
     login,
     logout,
     fetchUser,

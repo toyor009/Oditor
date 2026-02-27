@@ -3,7 +3,6 @@ export interface LoggedInUser {
   accountStatus: string;
   profileInfo: UserProfile;
 }
-
 export interface UserProfile {
   firstName: string;
   lastName: string;
@@ -15,14 +14,16 @@ export interface UserProfile {
   businessEmail: string;
   currentBusinessKey: string;
   vatApplicationType: string;
-  businessProfiles: Array<{
-    businessKey: string;
-    businessName: string;
-    businessLogo: string | null;
-    isBusinessNameEditable: boolean;
-    currencySymbol: string;
-    locationStatus: string;
-    mainBusinessName: string | null;
-    businessAddress: string;
-  }>;
+  businessProfiles: Array<UserBusiness>;
+}
+
+export interface UserBusiness {
+  businessKey: string;
+  businessName: string;
+  businessLogo: string | null;
+  isBusinessNameEditable: boolean;
+  currencySymbol: string;
+  locationStatus: string;
+  mainBusinessName: string | null;
+  businessAddress: string;
 }
