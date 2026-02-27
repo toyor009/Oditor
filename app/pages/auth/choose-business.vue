@@ -10,6 +10,6 @@ defineOptions({ name: 'BusinessSelectionPage' });
 definePageMeta({
   layout: 'guest',
   pageTitle: 'Choose Business',
-  // middleware: [''],
+  middleware: ['business-selection'],
 });
 </script>

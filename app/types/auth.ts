@@ -1,7 +1,10 @@
+import type { UserBusiness } from '@/types/business';
+
 export interface LoggedInUser {
   accessToken: string;
-  accountStatus: string;
+  accountStatus: 'Deactivated' | 'Active';
   profileInfo: UserProfile;
+  selectedBusinessKey?: string;
 }
 export interface UserProfile {
   firstName: string;
@@ -15,15 +18,4 @@ export interface UserProfile {
   currentBusinessKey: string;
   vatApplicationType: string;
   businessProfiles: Array<UserBusiness>;
-}
-
-export interface UserBusiness {
-  businessKey: string;
-  businessName: string;
-  businessLogo: string | null;
-  isBusinessNameEditable: boolean;
-  currencySymbol: string;
-  locationStatus: string;
-  mainBusinessName: string | null;
-  businessAddress: string;
 }

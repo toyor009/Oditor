@@ -70,16 +70,17 @@
 import * as v from 'valibot';
 
 import type { FormSubmitEvent } from '@nuxt/ui';
-import type { LoggedInUser } from '~/types/auth';
 
 import { useAuthStore } from '~/stores/useAuthStore';
+import { useAuthUserRedirection } from '~/composables/useAuthUserRedirection';
 
 defineOptions({ name: 'LoginForm' });
 
 type Schema = v.InferOutput<ReturnType<typeof createSchema>>;
 
-const auth = useAuthStore();
+const authStore = useAuthStore();
 const toast = useToast();
+const { handleRedirection } = useAuthUserRedirection();
 
 const schema = ref(createSchema());
 const showPassword = ref(false);
@@ -118,7 +119,7 @@ async function submitForm(event: FormSubmitEvent<Schema>) {
 async function login() {
   try {
     isLoading.value = true;
-    const { data, error } = await auth.login(loginDetails);
+    const { data, error } = await authStore.login(loginDetails);
 
     if (error.value) {
       toast.add({
@@ -137,25 +138,11 @@ async function login() {
       color: 'success',
     });
 
-    handleRedirection(data.value);
+    handleRedirection();
   } catch (error) {
     console.log('Error logging in', error);
   } finally {
     isLoading.value = false;
-  }
-}
-
-function handleRedirection(userInfo: LoggedInUser) {
-  const { accountStatus, profileInfo = {} as LoggedInUser['profileInfo'] } =
-    userInfo;
-  if (accountStatus === 'Deactivated') {
-    navigateTo('/auth/reactivate-account', { replace: true });
-    return;
-  }
-
-  if (profileInfo?.businessProfiles?.length === 1) {
-    navigateTo('/', { replace: true });
-    return;
   }
 }
 </script>

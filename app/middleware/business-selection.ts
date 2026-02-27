@@ -1,11 +1,11 @@
 import { useAuthStore } from '~/stores/useAuthStore';
+import { useBusinessStore } from '~/stores/useBusinessStore';
 
 export default defineNuxtRouteMiddleware((to, from) => {
-  if (from.meta.layout !== 'app') return to.path === '/';
-
   const auth = useAuthStore();
+  const businessStore = useBusinessStore();
 
-  if (!auth.isLoggedIn || !auth.loggedInUser?.selectedBusinessKey) {
+  if (!auth.isLoggedIn || businessStore.userBusinesses.length < 2) {
     return navigateTo('/auth/login', { replace: true });
   }
 });

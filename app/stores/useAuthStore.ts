@@ -17,25 +17,6 @@ export const useAuthStore = defineStore('auth', () => {
 
   const isLoggedIn = computed(() => !!loggedInUser.value);
 
-  const userHasABusiness = computed(() => userBusinesses.value.length > 0);
-
-  // const userBusinesses = computed(
-  //   () => loggedInUser?.value?.profileInfo?.businessProfiles || [],
-  // );
-
-  const userBusinesses = computed(() => {
-    const businesses = [
-      ...(loggedInUser?.value?.profileInfo?.businessProfiles || []),
-      ...(loggedInUser?.value?.profileInfo?.businessProfiles || []),
-      ...(loggedInUser?.value?.profileInfo?.businessProfiles || []),
-    ];
-
-    return businesses.map((b, index) => ({
-      ...b,
-      businessKey: index === 1 ? b.businessKey : `${index}-${b.businessKey}`,
-    }));
-  });
-
   async function login(credentials: LoginCredentials) {
     const { data, error } = await useApiService<LoggedInUser>(
       '/web/authenticate-user',
@@ -54,6 +35,11 @@ export const useAuthStore = defineStore('auth', () => {
           ...loggedInUser.value.profileInfo,
           email: credentials.email,
         } as UserProfile;
+
+      if (data.value?.profileInfo?.businessProfiles.length === 1) {
+        loggedInUser.value.selectedBusinessKey =
+          data.value?.profileInfo?.currentBusinessKey;
+      }
 
       localStorage.setItem('user', JSON.stringify(loggedInUser.value));
     }
@@ -113,23 +99,26 @@ export const useAuthStore = defineStore('auth', () => {
 
     if (data.value) {
       setAccessToken(data.value?.accessToken);
-      loggedInUser.value = data.value;
-      localStorage.setItem('user', JSON.stringify(data.value));
+      setLoggedInUser(data.value);
       localStorage.removeItem('otpKey');
     }
 
     return { data, error };
   }
 
+  function setLoggedInUser(userDeails: LoggedInUser) {
+    loggedInUser.value = userDeails;
+    localStorage.setItem('user', JSON.stringify(userDeails));
+  }
+
   return {
     isLoggedIn,
-    loggedInUser,
-    userHasABusiness,
-    userBusinesses,
+    loggedInUser: readonly(loggedInUser),
     login,
     logout,
     fetchUser,
     sendOtp,
     reactivateAccount,
+    setLoggedInUser,
   };
 });

@@ -23,9 +23,12 @@ import OTPForm from '~/components/account-reactivation/OTPForm.vue';
 import LogoutButton from '~/components/ui/LogoutButton.vue';
 
 import { useAuthStore } from '~/stores/useAuthStore';
+import { useAuthUserRedirection } from '~/composables/useAuthUserRedirection';
 
 const auth = useAuthStore();
 const toast = useToast();
+
+const { handleRedirection } = useAuthUserRedirection();
 
 const otpSent = ref(false);
 const isLoading = ref(false);
@@ -98,21 +101,6 @@ async function reactivateAccount(accountActivationOtp: string) {
     console.log('Error reactivating account', error);
   } finally {
     isLoading.value = false;
-  }
-}
-
-function handleRedirection() {
-  const businessProfiles =
-    auth.loggedInUser?.profileInfo?.businessProfiles || [];
-
-  if (businessProfiles?.length === 1) {
-    navigateTo('/', { replace: true });
-    return;
-  }
-
-  if (businessProfiles?.length > 1) {
-    navigateTo('/choose-business', { replace: true });
-    return;
   }
 }
 </script>

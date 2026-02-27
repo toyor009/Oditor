@@ -12,24 +12,8 @@
         </p>
       </div>
 
-      <!-- Business List -->
-      <ul class="py-4 px-3 border border-neutral-200 rounded-2xl">
-        <p class="mb-3 px-3 text-sm text-soft font-medium">My businesses</p>
-
-        <ul class="space-y-3 divide-y divide-neutral-200">
-          <li
-            v-for="business in authStore.userBusinesses"
-            class="not-last-of-type:pb-3"
-          >
-            <BusinessListItem
-              :key="business.businessName"
-              :business="business"
-              :is-active="activeBusinessKey === business.businessKey"
-              @select-business="activeBusinessKey = business.businessKey"
-            />
-          </li>
-        </ul>
-      </ul>
+      <!-- List of Businesses -->
+      <BusinessList />
 
       <!-- Log out -->
       <LogoutButton class="mt-11" />
@@ -38,17 +22,14 @@
 </template>
 
 <script setup lang="ts">
-import BusinessListItem from '~/components/business-selection/BusinessListItem.vue';
+import BusinessList from '~/components/business-selection/BusinessList.vue';
 import LogoutButton from '~/components/ui/LogoutButton.vue';
 
 import { useAuthStore } from '~/stores/useAuthStore';
 
 const authStore = useAuthStore();
-const route = useRoute();
 
-const activeBusinessKey = ref(
-  authStore.loggedInUser?.profileInfo?.currentBusinessKey || '',
-);
+const route = useRoute();
 
 const isReactivatedAccount = computed(
   () => route.redirectedFrom?.path === '/auth/choose-business',
