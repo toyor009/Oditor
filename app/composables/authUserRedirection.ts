@@ -13,6 +13,11 @@ export function authUserRedirection() {
 
     const userBusinesses = businessStore.userBusinesses;
 
+    if (!userBusinesses?.length) {
+      navigateTo('/auth/no-business', { replace: true });
+      return;
+    }
+
     if (userBusinesses?.length === 1) {
       navigateTo('/', { replace: true });
       return;

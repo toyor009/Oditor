@@ -36,7 +36,7 @@ export const useAuthStore = defineStore('auth', () => {
           email: credentials.email,
         } as UserProfile;
 
-      if (data.value?.profileInfo?.businessProfiles.length === 1) {
+      if (data.value?.profileInfo?.businessProfiles?.length === 1) {
         loggedInUser.value.selectedBusinessKey =
           data.value?.profileInfo?.currentBusinessKey;
       }
