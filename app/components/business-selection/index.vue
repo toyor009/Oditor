@@ -1,7 +1,9 @@
 <template>
   <div>
     <div>
-      <p class="mb-1 text-strong font-medium">{{ heading }}</p>
+      <p class="mb-1 text-strong font-medium">
+        {{ heading }}
+      </p>
       <div class="mb-8">
         <p
           v-for="(message, index) in messages"
@@ -32,7 +34,7 @@ const authStore = useAuthStore();
 const route = useRoute();
 
 const isReactivatedAccount = computed(
-  () => route.redirectedFrom?.path === '/auth/choose-business',
+  () => route.redirectedFrom?.path === '/auth/reactivate-account',
 );
 
 const heading = computed(() => {
