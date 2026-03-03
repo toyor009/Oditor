@@ -1,0 +1,66 @@
+{
+  "name": "OditorApp-Web-UI",
+  "version": "1.0.0",
+  "description": "Web app UI for Oditor",
+  "repository": "lintint-tech/oditorappwebui.git",
+  "type": "module",
+  "private": true,
+  "author": {
+    "name": "Toyosi Olayiwola"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/types.d.mts",
+      "import": "./dist/module.mjs"
+    }
+  },
+  "main": "./dist/module.mjs",
+  "typesVersions": {
+    "*": {
+      ".": [
+        "./dist/types.d.mts"
+      ]
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "prepack": "nuxt-module-build build",
+    "build": "nuxt build",
+    "dev": "nuxt dev",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare",
+    "release": "npm run lint && npm run test && npm run prepack && changelogen --release && npm publish && git push --follow-tags",
+    "lint": "eslint .",
+    "test": "vitest run",
+    "test:watch": "vitest watch",
+    "test:types": "vue-tsc --noEmit && vue-tsc --noEmit"
+  },
+  "dependencies": {
+    "@iconify-json/lucide": "^1.2.89",
+    "@iconify-json/simple-icons": "^1.2.69",
+    "@nuxt/kit": "^4.3.0",
+    "@pinia/nuxt": "^0.11.3",
+    "pinia": "^3.0.4",
+    "valibot": "^1.2.0",
+    "vue-router": "^5.0.2"
+  },
+  "devDependencies": {
+    "@nuxt/devtools": "^3.1.1",
+    "@nuxt/eslint": "^1.14.0",
+    "@nuxt/eslint-config": "^1.13.0",
+    "@nuxt/image": "^2.0.0",
+    "@nuxt/schema": "^4.3.0",
+    "@nuxt/test-utils": "^3.23.0",
+    "@nuxt/ui": "^4.4.0",
+    "@types/node": "latest",
+    "changelogen": "^0.6.2",
+    "eslint": "^9.39.2",
+    "nuxt": "^4.3.0",
+    "typescript": "~5.9.3",
+    "vitest": "^4.0.18",
+    "vue-tsc": "^3.2.4"
+  }
+}
