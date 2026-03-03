@@ -10,7 +10,6 @@ export default defineNuxtPlugin(() => {
       Accept: 'application/json',
     },
     onRequest({ options }) {
-      console.log('got here!!!!!!');
       if (token.value) {
         const existing = options.headers as HeadersInit | undefined;
         const headers: Record<string, string> =
